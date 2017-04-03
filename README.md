@@ -1,5 +1,5 @@
 # opengeodb-slim
-PHP generation tool for creating simple opengeodb MySQL dump 
+PHP generation tool for creating simple opengeodb MySQL dump  
 Some explanation about the OpenGeoDB database scheme: http://opengeodb.giswiki.org/wiki/Datenbank (in german)
 
 ## Steps for generating two slim MySQL OpenGeoDB Tables
