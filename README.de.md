@@ -7,7 +7,7 @@ Einige Erklärungen zum OpenGeoDB Datenbank Schema: http://opengeodb.giswiki.org
 1. Hol Dir die OpenGeoDB tab Dateien von http://www.fa-technik.adfc.de/code/opengeodb/
 2. Benenne sie nach den KFZ Zeichen des Landes um. DE.tab => D.tab, LI.tab => FL.tab, etc.
 3. Starte gen.php !
-4. Nach der Generierung hast Du zwei CSV Dateien pro Land. Z.B. D_zips.csv und D_locations.CSV for Deutschland.
+4. Nach der Generierung hast Du zwei CSV Dateien pro Land. Z.B. D_zips.csv und D_locations.CSV für Deutschland.
 5. Erstelle zwei MYSQL Tabellen mit folgenden Abfragen:
 ```
 CREATE TABLE `geo_locations` (
