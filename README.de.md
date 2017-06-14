@@ -1,17 +1,14 @@
 # opengeodb-slim
+PHP Generierungs-Script für die Erstellung eines reduzierten opengeodb MySQL Dumps
+Einige Erklärungen zum OpenGeoDB Datenbank Schema: http://opengeodb.giswiki.org/wiki/Datenbank
 
-Diese Anleitung gibt es auch in [Deutsch](https://github.com/stell/opengeodb-slim/edit/master/README.md).
+## Schritte zur Generierung von zwei schlanken MySQL OpenGeoDB Tabellen
 
-PHP generation tool for creating simple opengeodb MySQL dump  
-Some explanation about the OpenGeoDB database scheme: http://opengeodb.giswiki.org/wiki/Datenbank (in german)
-
-## Steps for generating two slim MySQL OpenGeoDB Tables
-
-1. Get OpenGeoDB tab files from http://www.fa-technik.adfc.de/code/opengeodb/
-2. Rename them to the license plate of the country. DE.tab => D.tab, LI.tab => FL.tab, etc.
-3. Start gen.php !
-4. After generation you have two CSV files per country called D_zips.csv and D_locations.CSV for Germany.
-5. Create two MYSQL tables using following queries:
+1. Hol Dir die OpenGeoDB tab Dateien von http://www.fa-technik.adfc.de/code/opengeodb/
+2. Benenne sie nach den KFZ Zeichen des Landes um. DE.tab => D.tab, LI.tab => FL.tab, etc.
+3. Starte gen.php !
+4. Nach der Generierung hast Du zwei CSV Dateien pro Land. Z.B. D_zips.csv und D_locations.CSV for Deutschland.
+5. Erstelle zwei MYSQL Tabellen mit folgenden Abfragen:
 ```
 CREATE TABLE `geo_locations` (
   `loc_id` int(11) NOT NULL,
@@ -82,26 +79,26 @@ ALTER TABLE `geo_zips`
   ADD KEY `hier8` (`hier8`),
   ADD KEY `hier9` (`hier9`);
 ```
-6. Import the generated CVS files into the tables
+6. Importiere die generierten CVS Dateien in diese Tabellen
 7. Et voilà!
 
-## Doing some queries
+## Einige Abfragen
 
-+ Get all ZIPs in Berlin
++ Alle Postleitzahlen in Berlin
 ```
 SELECT loc_plz  FROM `geo_zips` WHERE `loc_name` LIKE 'Berlin'
-or
+oder
 SELECT loc_plz  FROM `geo_zips` WHERE `loc_id` = 14356
 ```
 
-+ Get all districts in Germany
++ Alle Landkreise in Deutschland
 ```
 SELECT * FROM `geo_locations` WHERE `level` = 5 AND loc_kfz = 'D'
 or
 SELECT * FROM `geo_locations` WHERE `level` = 5 AND hier2 = 105
 ```
 
-+ Get all ZIPs in a 50 km radius around Berlin
++ Alle Postleitzahlen im 50 Km Radius um Berlin
 ```
 SELECT loc_plz FROM `geo_zips` WHERE (
 ACOS(SIN(PI() * 52.520008 / 180.0) * SIN(PI() * loc_lat / 180.0) 
@@ -110,7 +107,7 @@ ACOS(SIN(PI() * 52.520008 / 180.0) * SIN(PI() * loc_lat / 180.0)
 < 50;
 ```
 
-+ get all cities (level 7) around Passau (48.566736, 13.431947) in a 20 km radius
++ Alle Städte (level 7) um Passau (48.566736, 13.431947) in einem 20 km Radius
 ```
 SELECT loc_name FROM `geo_locations` WHERE (
 ACOS(SIN(PI() * 48.566736 / 180.0) * SIN(PI() * loc_lat / 180.0) 
@@ -119,7 +116,7 @@ ACOS(SIN(PI() * 48.566736 / 180.0) * SIN(PI() * loc_lat / 180.0)
 < 20 AND level = 7;
 ```
 
-+ get Geo-Structures of the city "Sinzendorf" (locid = 132446)
++ Die Geo-Hierarchie der Stadt "Sinzendorf" (locid = 132446)
 ```
 SELECT l2.loc_name AS land, 
 l3.loc_name as bundesland,
