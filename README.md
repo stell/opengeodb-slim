@@ -1,6 +1,6 @@
 # opengeodb-slim
 
-Diese Anleitung gibt es auch in [Deutsch](https://github.com/stell/opengeodb-slim/edit/master/README.de.md).
+## Diese Anleitung gibt es auch in [Deutsch](https://github.com/stell/opengeodb-slim/blob/master/README.de.md).
 
 PHP generation tool for creating simple opengeodb MySQL dump  
 Some explanation about the OpenGeoDB database scheme: http://opengeodb.giswiki.org/wiki/Datenbank (in german)
