@@ -1,0 +1,7 @@
+# Ignore everything s
+*
+# But descend into directories
+!*/
+
+!/.gitignore
+!/gen.php

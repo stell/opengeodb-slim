@@ -9,7 +9,7 @@
  */
 
 class Gen {
-	
+
 	public $empty_harray;
 	public $seekfile;
 	public $countryfile;
@@ -19,7 +19,6 @@ class Gen {
 		ini_set('max_execution_time', 6000);
 		$start = microtime(true);
 		$countries = array('D', 'CH', 'FL', 'A', 'B', 'L');
-		//$countries = array('D_');
 
 		$this->empty_harray = array(2 => 0, 3 => 0,  4 => 0,  5 => 0,  6 => 0,  7 => 0,  8 => 0,  9 => 0);
 		$this->generateLocs($countries);
@@ -28,23 +27,23 @@ class Gen {
 		echo number_format(( microtime(true) - $start), 2) . " Seconds\n";
    }
 
-   function getParents($locid, &$ids)   {			
+   function getParents($locid, &$ids)   {
 
    		$pos = strpos($this->countryfile_imploded, "##".$locid."\t")+2;	// search for locid on linestart and get pos of it
-   		if($pos == 2) return;	// return if nothing found 
+   		if($pos == 2) return;	// return if nothing found
    		$ex = explode("##", substr($this->countryfile_imploded, $pos, 2000));	// get a chunk from pos and explode it (2000 should be fine)
    		$data = explode("\t", $ex[0]);	// first element is the right one
-   		
+
  		$ids[$data[13]] = $locid;	// set level index to locid
  		if ($data[13] > 2) {	// continue if hierarchy smaller than land
- 			$this->getParents( $data[14], $ids); 			
- 		} 	
+ 			$this->getParents( $data[14], $ids);
+ 		}
 	 	return;
 
-   		/*   		
-   		// older and slower version   		
+   		/*
+   		// older and slower version
    		foreach($this->countryfile as $csvline) {
-	        if (stripos($csvline, (string)$locid) === 0) 
+	        if (stripos($csvline, (string)$locid) === 0)
         	{
         		$data = explode("\t", $csvline);
 				$num = count($data);
@@ -52,8 +51,8 @@ class Gen {
 		 		if ($data[$num-3] > 2) {
 		 			$this->getParents( $data[$num-2], $ids);
 		 			//break;
-		 		}		 	
-			 	return;			 	
+		 		}
+			 	return;
         	}
 	    }
 	    */
@@ -73,13 +72,13 @@ class Gen {
 
 			$content = trim(file_get_contents($country.".tab"));
 
-			$this->countryfile = preg_split('/\n|\r\n?/', $content);		
+			$this->countryfile = preg_split('/\n|\r\n?/', $content);
 			$totalLines = $limit ? $limit : count($this->countryfile);
 			$this->countryfile_imploded = implode("##", $this->countryfile);
 
 		    foreach ($this->countryfile as $csvline) {
 
-		    	$data = explode("\t", $csvline);		    
+		    	$data = explode("\t", $csvline);
 
 		    	// explanation: skip if (level >= 10 || empty line || ignore || first line || no level)
 		        if($data[13] >= 10 || count($data) == 0 || @$data[15] == 1 || @$data[0] == '#loc_id' || !$data[13]) {
@@ -88,7 +87,7 @@ class Gen {
 		        	continue;
 		        }
 
-		    	$ids = array();	
+		    	$ids = array();
 
 		        $loc_id = $data[0];
 		        $level = $data[13];
@@ -115,7 +114,7 @@ class Gen {
 				$ids = $new_ids;
 				$line = array_merge($line, $ids);
 
-				$line[] = $data[9];	// einw		   
+				$line[] = $data[9];	// einw
 
 		   		if(count($line) != 15) {
 		   			echo "Line broken:". PHP_EOL;
@@ -149,7 +148,7 @@ class Gen {
 			$row_nozip = 0;
 
 			$content = trim(file_get_contents($country.".tab"));
-			$this->countryfile = preg_split('/\n|\r\n?/', $content);		
+			$this->countryfile = preg_split('/\n|\r\n?/', $content);
 			$totalLines = $limit ? $limit : count($this->countryfile);
 			$this->countryfile_imploded = implode("##", $this->countryfile);
 
@@ -165,16 +164,16 @@ class Gen {
 		        	$row_nozip++;
 		        	$totalLines--;
 		        	continue;
-		        }    	
+		        }
 
-		        $ids = array();	
+		        $ids = array();
 
 		        $zips = explode(",", $data[7]);
 		        $zipcount = count($zips);
 
 		        $loc_id = $data[0];
 		        $level = $data[13];
-		        
+
 				$line = array();
 				$line[] = $loc_id;
 				//$line[] = $country;	// ISO
@@ -202,7 +201,7 @@ class Gen {
 		   			echo "Line broken:". PHP_EOL;
 		   			print_r($line);
 		   			continue;
-		   		}		    
+		   		}
 		        fwrite($handle_zips, implode($line, '#')."\n");
 		        $row++;
 
@@ -215,7 +214,7 @@ class Gen {
 			        	fwrite($handle_zips, implode($line, '#')."\n");
 			        	 $row++;
 			        	 $totalLines++;
-			        }        	
+			        }
 		        }
 		        if($limit && $row == $limit) break;
 		    }
@@ -231,7 +230,7 @@ class Gen {
 new Gen();
 
 
-/*	
+/*
 
 // Landkreise in D
 SELECT * FROM `geo_locations` WHERE `level` = 5 AND loc_kfz = 'D'
@@ -240,7 +239,7 @@ SELECT * FROM `geo_locations` WHERE `level` = 5 AND hier2 = 105
 
 
 
-// alle PLZ in Berlin	
+// alle PLZ in Berlin
 SELECT loc_plz  FROM `geo_zips` WHERE `loc_name` LIKE 'Berlin'
 oder
 SELECT loc_plz  FROM `geo_zips` WHERE `loc_id` = 14356
@@ -249,8 +248,8 @@ SELECT loc_plz  FROM `geo_zips` WHERE `loc_id` = 14356
 
 // alle PLZ rund um Berlin 50 km
 SELECT loc_plz FROM `geo_zips` WHERE (
-ACOS(SIN(PI() * 52.520008 / 180.0) * SIN(PI() * loc_lat / 180.0) 
-+ COS(PI() * 52.520008/180.0) * COS(PI() * loc_lat / 180.0) 
+ACOS(SIN(PI() * 52.520008 / 180.0) * SIN(PI() * loc_lat / 180.0)
++ COS(PI() * 52.520008/180.0) * COS(PI() * loc_lat / 180.0)
 * COS(PI() * loc_lon / 180.0 - PI() * 13.404954 / 180.0)) * 6371 )
 < 50;
 
@@ -258,15 +257,15 @@ ACOS(SIN(PI() * 52.520008 / 180.0) * SIN(PI() * loc_lat / 180.0)
 
 // alle Orte (level 2) rund um Passau (48.566736, 13.431947) Radius 20 km
 SELECT loc_name FROM `geo_locations` WHERE (
-ACOS(SIN(PI() * 48.566736 / 180.0) * SIN(PI() * loc_lat / 180.0) 
-+ COS(PI() * 48.566736/180.0) * COS(PI() * loc_lat / 180.0) 
+ACOS(SIN(PI() * 48.566736 / 180.0) * SIN(PI() * loc_lat / 180.0)
++ COS(PI() * 48.566736/180.0) * COS(PI() * loc_lat / 180.0)
 * COS(PI() * loc_lon / 180.0 - PI() * 13.431947 / 180.0)) * 6371 )
 < 20 AND level = 7;
 
 
 
 // Geo-Hierarchien von "Sinzendorf" (locid = 132446)
-SELECT l2.loc_name AS land, 
+SELECT l2.loc_name AS land,
 l3.loc_name as bundesland,
 l4.loc_name as bezirk,
 l5.loc_name as landkreis,
