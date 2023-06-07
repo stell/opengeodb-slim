@@ -7,7 +7,7 @@ Some explanation about the OpenGeoDB database scheme: http://opengeodb.giswiki.o
 
 ## Steps for generating two slim MySQL OpenGeoDB Tables
 
-1. Get OpenGeoDB tab files from http://www.fa-technik.adfc.de/code/opengeodb/
+1. Get OpenGeoDB tab files from [http://www.fa-technik.adfc.de/code/opengeodb/](https://github.com/ratopi/opengeodb)
 2. Rename them to the license plate of the country. DE.tab => D.tab, LI.tab => FL.tab, etc.
 3. Start gen.php !
 4. After generation you have two CSV files per country called D_zips.csv and D_locations.CSV for Germany.
