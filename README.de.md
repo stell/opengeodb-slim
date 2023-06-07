@@ -4,7 +4,7 @@ Einige Erklärungen zum OpenGeoDB Datenbank Schema: http://opengeodb.giswiki.org
 
 ## Schritte zur Generierung von zwei schlanken MySQL OpenGeoDB Tabellen
 
-1. Hol Dir die OpenGeoDB tab Dateien von http://www.fa-technik.adfc.de/code/opengeodb/
+1. Hol Dir die OpenGeoDB tab Dateien von https://github.com/ratopi/opengeodb
 2. Benenne sie nach den KFZ Zeichen des Landes um. DE.tab => D.tab, LI.tab => FL.tab, etc.
 3. Starte gen.php !
 4. Nach der Generierung hast Du zwei CSV Dateien pro Land. Z.B. D_zips.csv und D_locations.CSV für Deutschland.
